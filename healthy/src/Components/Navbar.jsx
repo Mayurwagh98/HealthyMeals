@@ -6,8 +6,7 @@ import {
   SettingOutlined,
 } from "@ant-design/icons";
 import { Menu } from "antd";
-import {CommonDrawer} from "./Drawer"
-
+import { CommonDrawer } from "./Drawer";
 
 function getItem(label, key, icon, children, type) {
   return {
@@ -37,8 +36,8 @@ const items = [
     // ),
   ]),
   getItem("Navigation Two", "sub2", <AppstoreOutlined />, [
-    getItem(<CommonDrawer />,""),
-    getItem("Option 6", "6"),
+    getItem(<CommonDrawer />, ""),
+    getItem("Login", "/login"),
     getItem("Submenu", "sub3", null, [
       getItem("Option 7", "7"),
       getItem("Option 8", "8"),
@@ -62,6 +61,9 @@ let Navbar = () => {
       onClick={onClick}
       style={{
         width: 256,
+        // position:"fixed",
+        // zIndex: 30,
+        // overflowY:"auto"
         // border:"1px solid red"
       }}
       defaultSelectedKeys={["1"]}
