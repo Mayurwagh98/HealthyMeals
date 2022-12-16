@@ -1,14 +1,30 @@
 import React from "react";
 import axios from "axios";
 import { useEffect, useState } from "react";
-import { Card } from "antd";
+import { Card,message  } from "antd";
 import { Loader } from "./Loading";
 
 let Home = () => {
   let [homeData, setHomeData] = useState([]);
   let [homeData2, setHomeData2] = useState([]);
   let [loading, setLoading] = useState(true);
-
+  const [messageApi, contextHolder] = message.useMessage();
+  const key = 'updatable';
+  const openMessage = () => {
+    messageApi.open({
+      key,
+      type: 'loading',
+      content: 'Loading...',
+    });
+    setTimeout(() => {
+      messageApi.open({
+        key,
+        type: 'success',
+        content: 'Loaded!',
+        duration: 2,
+      });
+    }, 1000);
+  };
   let getData = async () => {
     await axios
       .get(`https:/www.themealdb.com/api/json/v1/1/filter.php?i=chicken_breast`)
@@ -16,7 +32,7 @@ let Home = () => {
         homeData = res.data.meals;
         setTimeout(() => {
           setLoading(false);
-        }, 1000);
+          }, 1000);
         setHomeData(homeData);
         console.log(homeData);
       })
@@ -43,18 +59,16 @@ let Home = () => {
 
   return (
     <>
-      <h1 style={{ textAlign: "center" }}>Famous Meals</h1>
+    {contextHolder}
+    <h1 style={{ textAlign: "center" }}>Famous Meals</h1>
       {loading ? (
-        <Loader />
-      ) : (
+        // <Loader />
+        openMessage()
+
+        ) : (
         <div className="home_meals">
           {homeData.map((item, index) => {
             return (
-              // <div className="home_meals_divs">
-              //     <img src={item.strMealThumb} alt="images" />
-              //     <h3 style={{textAlign:"center"}}>{item.strMeal}</h3>
-              // </div>
-
               <Card
                 hoverable
                 style={{
@@ -76,7 +90,9 @@ let Home = () => {
 
       <h1 style={{ textAlign: "center" }}>Today's Special</h1>
       {loading ? (
-        <Loader />
+        // <Loader />
+        openMessage()
+
       ) : (
         <div className="home_meals">
           {homeData2.map((item, index) => {
