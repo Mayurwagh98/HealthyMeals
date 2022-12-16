@@ -4,18 +4,43 @@ import { useState } from "react";
 import { useEffect } from "react";
 import { Card } from "antd";
 import { Collapse } from "antd";
-import { Pagination, Button } from "antd";
+import { Button } from "antd";
 import ReactPaginate from "react-paginate";
 import { Loader } from "./Loading";
+import { message } from "antd";
 
 let Meals = () => {
   let [data, setData] = useState([]);
   let [loading, setLoading] = useState(true);
+  // let [msg, setMsg] = useState(false)
+  const [messageApi, contextHolder] = message.useMessage();
+  // --------------------------- Loading ---------------------------------------
+  const key = 'updatable';
+  
+  const openMessage = () => {
+    messageApi.open({
+      key,
+      type: 'loading',
+      content: 'Loading...',
+    });
+    setTimeout(() => {
+      messageApi.open({
+        key,
+        type: 'success',
+        content: 'Loaded!',
+        duration: 2,
+      });
+    }, 1000);
+  };
+
   let getMeals = async () => {
     await axios
       .get(`https:/www.themealdb.com/api/json/v1/1/filter.php?c=Seafood`)
       .then((res) => {
         data = res.data.meals;
+        setTimeout(() => {
+          setLoading(false);
+        }, 1000);
         setData(data);
         console.log(data);
       })
@@ -25,9 +50,6 @@ let Meals = () => {
   };
 
   useEffect(() => {
-    setTimeout(() => {
-      setLoading(false);
-    }, 2000);
     getMeals();
   }, []);
   const { Meta } = Card;
@@ -46,15 +68,51 @@ let Meals = () => {
   };
   const pageCount = Math.ceil(data.length / perpage);
   const offset = currPage * perpage; //offset = 0, 10, 20......
-  
-  let handleOrder = () =>{
-    console.log("hi")
-  }
+  const success = () => {
+    messageApi.open({
+      type: "success",
+      content: "Meal Added",
+    });
+  };
+  const fail = () => {
+    messageApi.open({
+      type: "error",
+      content: "You Need to Login First",
+    });
+  };
+  let price;
+  // let navigate = useNavigate()
+  let handleOrder = (item) => {
+    let user = JSON.parse(localStorage.getItem("LoginDetails"));
+    let qty = 1
+    if (user) {
+      let Itemarr = JSON.parse(localStorage.getItem("CartDetails")) || [];
+      item = {...item, qty}
+      Itemarr.push(item);
+      localStorage.setItem("CartDetails", JSON.stringify(Itemarr));
+      // setMsg(true)
+      success();
+    } else {
+      // alert(`Login First`);
+      // navigation.navigate("/login")
+      fail();
+    }
+    // item = {...item, }
+  };
+
+  // let handleQty = (val) => {
+  //   if (val == "Add") {
+  //     setCount((count += 1));
+  //   }
+  // };
+
   return (
     <>
+      {contextHolder}
       <h1 style={{ textAlign: "center" }}>Meals</h1>
       {loading ? (
-        <Loader />
+        // <Loader />
+        openMessage()
       ) : (
         <div className="meals_div">
           {data.slice(offset, offset + perpage).map((item, index) => {
@@ -63,7 +121,6 @@ let Meals = () => {
                 hoverable
                 style={{
                   width: 220,
-                  
                 }}
                 className="card"
                 key={index}
@@ -73,9 +130,15 @@ let Meals = () => {
                   <Panel header={item.strMeal} key="0">
                     <Meta
                       // title={item.strMeal}
-                      description={`₹ ${Math.floor(Math.random() * 1000) + 1}`} //adding 1 because to display price from 1 to 1000 (as a whole number)
+                      //adding 1 because to display price from 1 to 1000 (as a whole number)
+                      description={Math.floor(Math.random() * 1000) + 1}
                       style={{ textAlign: "center" }}
                     />
+                    {/* 
+                    <Button onClick={() => handleQty("Add")}>+</Button>
+                    <h3>{count}</h3>
+                    <Button onClick={() => handleQty("Sub")}>-</Button> */}
+
                     <Button
                       type="primary"
                       style={{
@@ -84,7 +147,7 @@ let Meals = () => {
                         display: "block",
                         marginTop: "10px",
                       }}
-                      onClick={handleOrder}
+                      onClick={() => handleOrder(item)}
                     >
                       Order
                     </Button>
