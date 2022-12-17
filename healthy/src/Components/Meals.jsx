@@ -6,7 +6,7 @@ import { Card } from "antd";
 import { Collapse } from "antd";
 import { Button } from "antd";
 import ReactPaginate from "react-paginate";
-import { Loader } from "./Loading";
+// import { Loader } from "./Loading";
 import { message } from "antd";
 
 let Meals = () => {
@@ -80,14 +80,15 @@ let Meals = () => {
       content: "You Need to Login First",
     });
   };
-  let price;
+  
   // let navigate = useNavigate()
   let handleOrder = (item) => {
     let user = JSON.parse(localStorage.getItem("LoginDetails"));
+    let price = Math.round(item.idMeal / 100)+ 1
     let qty = 1
     if (user) {
       let Itemarr = JSON.parse(localStorage.getItem("CartDetails")) || [];
-      item = {...item, qty}
+      item = {...item, qty, price}
       Itemarr.push(item);
       localStorage.setItem("CartDetails", JSON.stringify(Itemarr));
       // setMsg(true)
@@ -131,7 +132,9 @@ let Meals = () => {
                     <Meta
                       // title={item.strMeal}
                       //adding 1 because to display price from 1 to 1000 (as a whole number)
-                      description={Math.floor(Math.random() * 1000) + 1}
+//                       description={Math.floor(Math.random() * 1000) + 1}
+                      description={Math.round(item.idMeal / 100)+ 1}
+
                       style={{ textAlign: "center" }}
                     />
                     {/* 
