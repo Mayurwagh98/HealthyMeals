@@ -81,15 +81,16 @@
 // export { Order };
 import React, { useState } from "react";
 import { Card, Collapse, Button } from "antd";
-
-let Order = () => {
+import { useNavigate } from "react-router-dom";
+import { Payment } from "./Payment";
+let Order = (props) => {
   let OrderedDetails = JSON.parse(localStorage.getItem("CartDetails")) || [];
   let [displayOrder, setDisplayOrder] = useState([...OrderedDetails]);
 
   const { Meta } = Card;
 
   const { Panel } = Collapse;
-// -------------------------------- Quantity ----------------------------------
+  // -------------------------------- Quantity ----------------------------------
   let handleQty = (val, item) => {
     if (val === "Add") {
       item.qty++;
@@ -115,9 +116,14 @@ let Order = () => {
     sum += x.qty * x.price;
   }
 
+  let navigate = useNavigate("/payment")
+  // let handleProceed = () =>{
+  //   <Payment />
+  //   // navigate('/payment')
+  // }
   return (
     <>
-      <h1>Total:- {sum}</h1>
+      <h2 style={{ textAlign: "center" }}>Total:-{sum}</h2>
       <div className="Order_div">
         {OrderedDetails.map((item, index) => {
           return (
@@ -156,6 +162,8 @@ let Order = () => {
           );
         })}
       </div>
+      <Payment />
+      {/* <Button type="primary" >Proceed</Button> */}
     </>
   );
 };
