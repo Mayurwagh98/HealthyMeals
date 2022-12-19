@@ -1,5 +1,9 @@
 import React, { useState, useHistory } from "react";
 import { useNavigate } from "react-router-dom";
+import { UserOutlined } from "@ant-design/icons";
+// import { EyeInvisibleOutlined, EyeTwoTone } from "@ant-design/icons";
+import { Button, Input, Space } from "antd";
+import { message } from "antd";
 
 let Login = () => {
   let [loginformData, setloginformData] = useState({
@@ -7,13 +11,30 @@ let Login = () => {
     loginEmail: "",
     loginPass: "",
   });
-  let navigate = useNavigate()
+  const [passwordVisible, setPasswordVisible] = React.useState(false);
+  const [messageApi, contextHolder] = message.useMessage();
+  const success = () => {
+    messageApi.open({
+      type: "success",
+      content: "Login Successfull!",
+    });
+  };
+  const fail1 = () => {
+    messageApi.open({
+      type: "error",
+      content: "User Already Logged In!",
+    });
+  };
+  const fail2 = () => {
+    messageApi.open({
+      type: "error",
+      content: "You Need To Signup First!",
+    });
+  };
+  let navigate = useNavigate();
 
-  let signupData = JSON.parse(localStorage.getItem("Formdata"));
-  // let loginDetails = JSON.parse(localStorage.getItem("LoginDetails")) || [];
-  let loginDetails = JSON.parse(localStorage.getItem("LoginDetails"));
-
-  // console.log(signupData)
+  let signupData = JSON.parse(localStorage.getItem("Formdata")) || [];
+  let user = JSON.parse(localStorage.getItem("LoginDetails"));
 
   let handleLoginform = (event) => {
     let { name, value } = event.target;
@@ -22,7 +43,6 @@ let Login = () => {
       [name]: value,
     });
   };
-
   let loginFormSubmit = (event) => {
     event.preventDefault();
 
@@ -33,48 +53,75 @@ let Login = () => {
       }
     }
     if (flag) {
-      // loginDetails.push(loginformData);
+      if (user) {
+        // alert(`User already logged`);
+        fail1();
+        setloginformData({ loginFname: "", loginEmail: "", loginPass: "" });
+      } else {
+        localStorage.setItem("LoginDetails", JSON.stringify(loginformData));
 
-      localStorage.setItem("LoginDetails", JSON.stringify(loginformData));
-
-      // console.log(loginDetails);
-      setloginformData({ loginFname: "", loginEmail: "", loginPass: "" });
-      alert(`Login Successfull`);
-      navigation.navigate('/order')
+        setloginformData({ loginFname: "", loginEmail: "", loginPass: "" });
+        // alert(`Login Successfull`);
+        success();
+        navigation.navigate("/meals");
+      }
     } else {
-      alert(`Register first`);
+      // alert(`Sigup first`);
+      fail2();
+      setloginformData({ loginFname: "", loginEmail: "", loginPass: "" });
     }
-
-    // setloginformData(<Navigate to="/product"/>)
   };
 
   return (
     <>
-      <h1 style={{ marginTop: "200px" }}>Login page</h1>
-      <div>
-        <form onSubmit={loginFormSubmit}>
-          <input
+      {contextHolder}
+      <h1 className="login_heading">Login page</h1>
+      <div className="Login_div">
+        <form>
+          <Input
+            size="large"
+            placeholder="Enter Name"
+            prefix={<UserOutlined />}
             type="text"
-            placeholder="enter your name"
             name="loginFname"
             value={loginformData.loginFname}
             onChange={handleLoginform}
           />
-          <input
+          <br />
+          <br />
+          <Input
+            placeholder="Enter email"
             type="text"
-            placeholder="enter your email"
             name="loginEmail"
             value={loginformData.loginEmail}
             onChange={handleLoginform}
           />
-          <input
-            type="password"
-            placeholder="enter password"
-            name="loginPass"
-            value={loginformData.loginPass}
-            onChange={handleLoginform}
-          />
-          <input type="submit" />
+          <br />
+          <br />
+
+          <Space direction="horizontal">
+            <Input.Password
+              placeholder="input password"
+              visibilityToggle={{
+                visible: passwordVisible,
+                onVisibleChange: setPasswordVisible,
+              }}
+            />
+            <Button
+              style={{
+                width: 80,
+              }}
+              onClick={() => setPasswordVisible((prevState) => !prevState)}
+            >
+              {passwordVisible ? "Hide" : "Show"}
+            </Button>
+          </Space>
+          <br />
+          <br />
+
+          <Button type="primary" onClick={loginFormSubmit} className="login_btn">
+            Submit
+          </Button>
         </form>
       </div>
     </>
