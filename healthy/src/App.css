@@ -91,3 +91,39 @@
       height: 12px;
   }
 }
+
+/* Login  */
+
+.Login_div{
+  /* border: 1px solid red; */
+  width: 40%;
+  margin: auto;
+  
+}
+.login_btn{
+  /* border: 1px solid blue; */
+  margin: auto;
+  display: block;
+}
+.login_heading{
+  text-align: center;
+
+}
+
+/* Order */
+.Order_div{
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 10px;
+  /* border: 1px solid red; */
+  margin-top: 20px;
+}
+
+/* Payment */
+.payment_progress{
+  padding: 10px;
+  line-height: 40px;
+  font-size: 20px;
+  font-weight: bold;
+  
+}
