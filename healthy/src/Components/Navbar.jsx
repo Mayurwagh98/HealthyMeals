@@ -17,6 +17,7 @@ function getItem(label, key, icon, children, type) {
     type,
   };
 }
+import { Badge, Space } from "antd";
 
 const items = [
   getItem("Navigation One", "sub1", <MailOutlined />, [
@@ -38,10 +39,12 @@ const items = [
   getItem("Navigation Two", "sub2", <AppstoreOutlined />, [
     getItem(<CommonDrawer />, ""),
     getItem("Login", "/login"),
-    getItem("Submenu", "sub3", null, [
-      getItem("Option 7", "7"),
-      getItem("Option 8", "8"),
-    ]),
+    getItem(<Badge size="middle">Cart</Badge>, "/order"),
+
+    // getItem("Sort", "sub3", null, [
+    //   getItem("High to Low", "7"),
+    //   getItem("Low to High", "8"),
+    // ]),
   ]),
   getItem("Navigation Three", "sub4", <SettingOutlined />, [
     getItem("Option 9", "9"),
