@@ -72,20 +72,7 @@ let Signup = () => {
         <form onSubmit={submitForm}>
           <h1 style={{ textAlign: "center" }}>Singup</h1>
           <br />
-          {/* <
-           
-            placeholder="Enter name"
-            style={{padding:"20px", width:"60%", marginBottom:"10px" }}
-          /> */}
 
-          {/* <input
-            type="text"
-            value={formData.email}
-            required={true}
-            name="email"
-            onChange={handleForm}
-            placeholder="Enter email"
-          /> */}
           <Input
             size="large"
             placeholder="Enter name"
@@ -140,7 +127,19 @@ let Signup = () => {
           <br />
           <br />
 
-          <input type="submit" />
+          {/* <Button type="primary"  onClick={submitForm}>Submit</Button> */}
+          <input
+            type="submit"
+            style={{
+              padding: "10px",
+              borderRadius: "5px",
+              border: "none",
+              margin:"auto",
+              display:"block",
+              backgroundColor:"#4B56D2",
+              color:"white"
+            }}
+          />
         </form>
       </div>
     </>
