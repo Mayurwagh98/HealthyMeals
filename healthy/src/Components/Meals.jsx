@@ -8,26 +8,30 @@ import { Button } from "antd";
 import ReactPaginate from "react-paginate";
 // import { Loader } from "./Loading";
 import { message } from "antd";
+import { DownOutlined } from "@ant-design/icons";
+import { Dropdown, Space, Typography } from "antd";
 
 let Meals = () => {
   let [data, setData] = useState([]);
   let [loading, setLoading] = useState(true);
-  // let [msg, setMsg] = useState(false)
+  let [sortHtoL, setSortHtoL] = useState([]);
+  let [sortLtoH, setSortLtoH] = useState([]);
+
   const [messageApi, contextHolder] = message.useMessage();
   // --------------------------- Loading ---------------------------------------
-  const key = 'updatable';
-  
+  const key = "updatable";
+
   const openMessage = () => {
     messageApi.open({
       key,
-      type: 'loading',
-      content: 'Loading...',
+      type: "loading",
+      content: "Loading...",
     });
     setTimeout(() => {
       messageApi.open({
         key,
-        type: 'success',
-        content: 'Loaded!',
+        type: "success",
+        content: "Loaded!",
         duration: 2,
       });
     }, 1000);
@@ -52,6 +56,7 @@ let Meals = () => {
   useEffect(() => {
     getMeals();
   }, []);
+
   const { Meta } = Card;
 
   const { Panel } = Collapse;
@@ -80,15 +85,17 @@ let Meals = () => {
       content: "You Need to Login First",
     });
   };
-  
-  // let navigate = useNavigate()
+
+  let qty = 1;
+
   let handleOrder = (item) => {
     let user = JSON.parse(localStorage.getItem("LoginDetails"));
-    let price = Math.round(item.idMeal / 100)+ 1
-    let qty = 1
+
+    let price = Math.round(item.idMeal / 100) + 1;
     if (user) {
       let Itemarr = JSON.parse(localStorage.getItem("CartDetails")) || [];
-      item = {...item, qty, price}
+      item = { ...item, qty, price };
+      console.log(item);
       Itemarr.push(item);
       localStorage.setItem("CartDetails", JSON.stringify(Itemarr));
       // setMsg(true)
@@ -101,16 +108,63 @@ let Meals = () => {
     // item = {...item, }
   };
 
-  // let handleQty = (val) => {
-  //   if (val == "Add") {
-  //     setCount((count += 1));
-  //   }
-  // };
+  // -------------------- Sorting --------------------
+
+  let handleSortLtH = () => {
+    sortHtoL = data.sort((a, b) => {
+      return a.idMeal - b.idMeal;
+    });
+    setSortLtoH([...sortLtoH]);
+    console.log(sortHtoL);
+  };
+  let handleSortHtL = () => {
+    sortLtoH = data.sort((a, b) => {
+      return b.idMeal - a.idMeal;
+    });
+    setSortHtoL([...sortHtoL]);
+    console.log(sortLtoH);
+  };
+  const items = [
+    {
+      key: "1",
+      label: "Price High to Low",
+      onClick: handleSortHtL,
+    },
+    {
+      key: "2",
+      label: "Price Low to High",
+      onClick: handleSortLtH,
+    },
+  ];
 
   return (
     <>
       {contextHolder}
       <h1 style={{ textAlign: "center" }}>Meals</h1>
+      <Dropdown
+        menu={{
+          items,
+          selectable: true,
+          defaultSelectedKeys: ["3"],
+        }}
+      >
+        <Typography.Link
+          style={{
+            border: "2px solid red",
+            padding: "5px",
+            borderRadius: "5px",
+            
+          }}
+        >
+          <Space>
+            Sort Based On Price
+            <DownOutlined />
+          </Space>
+        </Typography.Link>
+      </Dropdown>
+      {/* <Button onClick={() => handleSortHtL()}>Sort H to L</Button>
+      <Button onClick={() => handleSortLtH()}>Sort L to H</Button> */}
+
       {loading ? (
         // <Loader />
         openMessage()
@@ -132,15 +186,14 @@ let Meals = () => {
                     <Meta
                       // title={item.strMeal}
                       //adding 1 because to display price from 1 to 1000 (as a whole number)
-//                       description={Math.floor(Math.random() * 1000) + 1}
-                      description={Math.round(item.idMeal / 100)+ 1}
-
+                      //                       description={Math.floor(Math.random() * 1000) + 1}
+                      description={`₹${Math.round(item.idMeal / 100) + 1}`}
                       style={{ textAlign: "center" }}
                     />
-                    {/* 
-                    <Button onClick={() => handleQty("Add")}>+</Button>
-                    <h3>{count}</h3>
-                    <Button onClick={() => handleQty("Sub")}>-</Button> */}
+
+                    {/* <Button onClick={() => handleQty("Add", item)}>+</Button>
+                    <h3>{qty}</h3>
+                    <Button onClick={() => handleQty("Sub", item)}>-</Button>  */}
 
                     <Button
                       type="primary"
