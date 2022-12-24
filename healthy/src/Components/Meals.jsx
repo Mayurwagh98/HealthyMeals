@@ -105,7 +105,7 @@ let Meals = () => {
       // navigation.navigate("/login")
       fail();
     }
-    // item = {...item, }
+    
   };
 
   // -------------------- Sorting --------------------
@@ -127,11 +127,16 @@ let Meals = () => {
   const items = [
     {
       key: "1",
+      label: "Default",
+      onClick: getMeals,
+    },
+    {
+      key: "2",
       label: "Price High to Low",
       onClick: handleSortHtL,
     },
     {
-      key: "2",
+      key: "3",
       label: "Price Low to High",
       onClick: handleSortLtH,
     },
@@ -153,7 +158,7 @@ let Meals = () => {
             border: "2px solid red",
             padding: "5px",
             borderRadius: "5px",
-            
+            marginLeft:"10px"
           }}
         >
           <Space>
@@ -187,7 +192,7 @@ let Meals = () => {
                       // title={item.strMeal}
                       //adding 1 because to display price from 1 to 1000 (as a whole number)
                       //                       description={Math.floor(Math.random() * 1000) + 1}
-                      description={`₹${Math.round(item.idMeal / 100) + 1}`}
+                      description={`₹ ${Math.round(item.idMeal / 100) + 1}`}
                       style={{ textAlign: "center" }}
                     />
 
