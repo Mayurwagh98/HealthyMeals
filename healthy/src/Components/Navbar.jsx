@@ -19,6 +19,7 @@ function getItem(label, key, icon, children, type) {
 }
 import { Badge, Space } from "antd";
 
+let CartDetails = JSON.parse(localStorage.getItem("CartDetails"))
 const items = [
   getItem("Navigation One", "sub1", <MailOutlined />, [
     getItem(
@@ -39,7 +40,7 @@ const items = [
   getItem("Navigation Two", "sub2", <AppstoreOutlined />, [
     getItem(<CommonDrawer />, ""),
     getItem("Login", "/login"),
-    getItem(<Badge size="middle">Cart</Badge>, "/order"),
+    getItem(<Badge count={CartDetails.length} size="small">Cart</Badge>, "/order"),
 
     // getItem("Sort", "sub3", null, [
     //   getItem("High to Low", "7"),
