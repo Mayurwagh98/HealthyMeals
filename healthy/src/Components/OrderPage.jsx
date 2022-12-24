@@ -139,7 +139,7 @@ let Order = (props) => {
               <Collapse defaultActiveKey={["1"]}>
                 <Panel header={item.strMeal} key="0">
                   <Meta
-                    description={Math.round(item.idMeal / 100) + 1}
+                    description={`₹ ${Math.round(item.idMeal / 100) + 1}`}
                     style={{ textAlign: "center" }}
                   />
                   <div style={{ display: "flex", marginTop: "5px" }}>
