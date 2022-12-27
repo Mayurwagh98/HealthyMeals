@@ -7,13 +7,7 @@ let Payment = () => {
   const [open, setOpen] = useState(false);
   let [flag, setFlag] = useState(false);
   const [messageApi, contextHolder] = message.useMessage();
-
-  // let [address, setAddress] = useState({
-  //   fname: "",
-  //   email: "",
-  //   mobile: "",
-  //   addre: "",
-  // });
+  
   const showDrawer = () => {
     setOpen(true);
   };
@@ -47,7 +41,7 @@ let Payment = () => {
       <Button
         type="primary"
         onClick={showDrawer}
-        style={{ display: "block", margin: "auto" }}
+        style={{ display: "block", margin: "auto", marginTop:"10px" }}
       >
         Proceed To Pay
       </Button>
