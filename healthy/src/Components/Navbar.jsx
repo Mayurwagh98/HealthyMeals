@@ -19,7 +19,7 @@ function getItem(label, key, icon, children, type) {
 }
 import { Badge, Space } from "antd";
 
-let CartDetails = JSON.parse(localStorage.getItem("CartDetails"))
+let CartDetails = JSON.parse(localStorage.getItem("CartDetails"));
 const items = [
   getItem("Navigation One", "sub1", <MailOutlined />, [
     getItem(
@@ -40,12 +40,12 @@ const items = [
   getItem("Navigation Two", "sub2", <AppstoreOutlined />, [
     getItem(<CommonDrawer />, ""),
     getItem("Login", "/login"),
-    getItem(<Badge count={CartDetails.length} size="small">Cart</Badge>, "/order"),
-
-    // getItem("Sort", "sub3", null, [
-    //   getItem("High to Low", "7"),
-    //   getItem("Low to High", "8"),
-    // ]),
+    getItem(
+      <Badge count={CartDetails.length} size="small">
+        Cart
+      </Badge>,
+      "/order"
+    ),
   ]),
   getItem("Navigation Three", "sub4", <SettingOutlined />, [
     getItem("Option 9", "9"),
@@ -61,20 +61,27 @@ let Navbar = () => {
     console.log("click ", navigate(e.key));
   };
   return (
-    <Menu
-      onClick={onClick}
-      style={{
-        width: 256,
-        // position:"fixed",
-        // zIndex: 30,
-        // overflowY:"auto"
-        // border:"1px solid red"
-      }}
-      defaultSelectedKeys={["1"]}
-      defaultOpenKeys={["sub1"]}
-      mode="inline"
-      items={items}
-    />
+    <>
+      <img
+        src="https://user-images.githubusercontent.com/69896733/209149712-53ed17eb-c85b-4939-bf2e-07b66553a960.png"
+        alt="image_logo"
+        className="logo_img"
+      />
+      <Menu
+        onClick={onClick}
+        style={{
+          width: 256,
+          // position:"fixed",
+          // zIndex: 30,
+          // overflowY:"auto"
+          // border:"1px solid red"
+        }}
+        defaultSelectedKeys={["1"]}
+        defaultOpenKeys={["sub1"]}
+        mode="inline"
+        items={items}
+      />
+    </>
   );
 };
 
