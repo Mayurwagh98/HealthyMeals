@@ -1,11 +1,11 @@
-.meals_div{
+.meals_div {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
   /* margin: auto; */
   gap: 10px;
   /* width: 100%; */
   /* border: 1px solid red; */
-  
+
 }
 
 /* .meals_divs img{
@@ -15,14 +15,15 @@
   display: block;
   
 } */
-.meals_div .card{
+.meals_div .card {
   /* border: 1px solid blue; */
   margin-left: 20px;
   margin-top: 15px;
 }
+
 /* Homepage */
 
-.home_meals{
+.home_meals {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
   gap: 10px;
@@ -77,41 +78,44 @@
 .pagination_link_active a {
   color: #fff;
   background-color: #47a7de;
-  
+
 }
 
 .pagination_link_disabled a {
   color: rgb(198, 197, 202);
   border: 1px solid rgb(198, 197, 202);
-  
+
 }
+
 @media screen and (max-width: 720px) {
   .pagination__link {
-      width: 45px;
-      height: 12px;
+    width: 45px;
+    height: 12px;
   }
 }
 
 /* Login  */
 
-.Login_div{
+.Login_div {
   /* border: 1px solid red; */
   width: 40%;
   margin: auto;
-  
+  /* height: 700px; */
 }
-.login_btn{
+
+.login_btn {
   /* border: 1px solid blue; */
   margin: auto;
   display: block;
 }
-.login_heading{
-  text-align: center;
 
+.login_heading {
+  text-align: center;
+  margin-top: 100px;
 }
 
 /* Order */
-.Order_div{
+.Order_div {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
   gap: 10px;
@@ -120,10 +124,46 @@
 }
 
 /* Payment */
-.payment_progress{
+.payment_progress {
   padding: 10px;
   line-height: 40px;
   font-size: 20px;
   font-weight: bold;
-  
+
+}
+
+/* Logo */
+.logo_img {
+  width: 70%;
+  height: 170px;
+  margin-right: auto;
+  margin-left: auto;
+  display: block;
+}
+
+
+.slider_div {
+  /* margin: 10px; */
+  background: rgb(63, 94, 251);
+  background: radial-gradient(circle, rgb(91, 95, 112) 0%, rgba(12, 23, 24, 1) 100%);
+}
+
+/* Body */
+body {
+  margin-left: auto;
+  margin-right: auto;
+  display: 'block';
+  width: 100%;
+  background: #215f00;
+  /* fallback for old browsers */
+  background: -webkit-linear-gradient(to right, #215f00, #e4e4d9);
+  /* Chrome 10-25, Safari 5.1-6 */
+  background: linear-gradient(to right, #215f00, #e4e4d9)
+}
+
+/* Navbar */
+.navbar {
+  background: white;
+  /* position: sticky; */
+ 
 }
