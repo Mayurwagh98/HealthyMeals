@@ -10,19 +10,11 @@ import { Payment } from "./Components/Payment";
 
 function App() {
   return (
-    <div className="App" style={{ display: "flex" }}>
-      <div>
+    <div className="App" >
+      {/* <div > */}
         <Navbar />
-      </div>
-      <div
-        style={{
-          marginLeft: "auto",
-          marginRight: "auto",
-          dispaly: "block",
-          width: "100%",
-          backgroundColor: "#FAF8F1",
-        }}
-      >
+      {/* </div> */}
+      {/* <div className="body_div"> */}
         <Routes>
           <Route exact path="/" element={<Home />} />
           <Route exact path="/meals" element={<Meals />} />
@@ -32,7 +24,7 @@ function App() {
           <Route exact path="/payment" element={<Payment />} />
           <Route exact path="*" element={<Error />} />
         </Routes>
-      </div>
+      {/* </div> */}
     </div>
   );
 }
