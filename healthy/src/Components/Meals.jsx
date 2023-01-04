@@ -105,7 +105,6 @@ let Meals = () => {
       // navigation.navigate("/login")
       fail();
     }
-    
   };
 
   // -------------------- Sorting --------------------
@@ -146,27 +145,7 @@ let Meals = () => {
     <>
       {contextHolder}
       <h1 style={{ textAlign: "center" }}>Meals</h1>
-      <Dropdown
-        menu={{
-          items,
-          selectable: true,
-          defaultSelectedKeys: ["3"],
-        }}
-      >
-        <Typography.Link
-          style={{
-            border: "2px solid red",
-            padding: "5px",
-            borderRadius: "5px",
-            marginLeft:"10px"
-          }}
-        >
-          <Space>
-            Sort Based On Price
-            <DownOutlined />
-          </Space>
-        </Typography.Link>
-      </Dropdown>
+
       {/* <Button onClick={() => handleSortHtL()}>Sort H to L</Button>
       <Button onClick={() => handleSortLtH()}>Sort L to H</Button> */}
 
@@ -174,49 +153,74 @@ let Meals = () => {
         // <Loader />
         openMessage()
       ) : (
-        <div className="meals_div">
-          {data.slice(offset, offset + perpage).map((item, index) => {
-            return (
-              <Card
-                hoverable
+        <div style={{ display: "flex" }}>
+          <div className="sortDiv">
+            <Dropdown
+              menu={{
+                items,
+                selectable: true,
+                defaultSelectedKeys: ["3"],
+              }}
+            >
+              <Typography.Link
                 style={{
-                  width: 220,
+                  border: "2px solid red",
+                  padding: "5px",
+                  borderRadius: "5px",
+                  marginLeft: "10px",
                 }}
-                className="card"
-                key={index}
-                cover={<img alt="example" src={item.strMealThumb} />}
               >
-                <Collapse defaultActiveKey={["1"]} onChange={onChange}>
-                  <Panel header={item.strMeal} key="0">
-                    <Meta
-                      // title={item.strMeal}
-                      //adding 1 because to display price from 1 to 1000 (as a whole number)
-                      //                       description={Math.floor(Math.random() * 1000) + 1}
-                      description={`₹ ${Math.round(item.idMeal / 100) + 1}`}
-                      style={{ textAlign: "center" }}
-                    />
+                <Space>
+                  Sort Based On Price
+                  <DownOutlined />
+                </Space>
+              </Typography.Link>
+            </Dropdown>
+          </div>
+          <div className="meals_div">
+            {data.slice(offset, offset + perpage).map((item, index) => {
+              return (
+                <Card
+                  hoverable
+                  style={{
+                    width: 220,
+                  }}
+                  className="card"
+                  key={index}
+                  cover={<img alt="example" src={item.strMealThumb} />}
+                >
+                  <Collapse defaultActiveKey={["1"]} onChange={onChange}>
+                    <Panel header={item.strMeal} key="0">
+                      <Meta
+                        // title={item.strMeal}
+                        //adding 1 because to display price from 1 to 1000 (as a whole number)
+                        //                       description={Math.floor(Math.random() * 1000) + 1}
+                        description={`₹ ${Math.round(item.idMeal / 100) + 1}`}
+                        style={{ textAlign: "center" }}
+                      />
 
-                    {/* <Button onClick={() => handleQty("Add", item)}>+</Button>
+                      {/* <Button onClick={() => handleQty("Add", item)}>+</Button>
                     <h3>{qty}</h3>
                     <Button onClick={() => handleQty("Sub", item)}>-</Button>  */}
 
-                    <Button
-                      type="primary"
-                      style={{
-                        marginLeft: "auto",
-                        marginRight: "auto",
-                        display: "block",
-                        marginTop: "10px",
-                      }}
-                      onClick={() => handleOrder(item)}
-                    >
-                      Order
-                    </Button>
-                  </Panel>
-                </Collapse>
-              </Card>
-            );
-          })}
+                      <Button
+                        type="primary"
+                        style={{
+                          marginLeft: "auto",
+                          marginRight: "auto",
+                          display: "block",
+                          marginTop: "10px",
+                        }}
+                        onClick={() => handleOrder(item)}
+                      >
+                        Order
+                      </Button>
+                    </Panel>
+                  </Collapse>
+                </Card>
+              );
+            })}
+          </div>
         </div>
       )}
 
