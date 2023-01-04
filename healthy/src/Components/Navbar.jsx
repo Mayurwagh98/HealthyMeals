@@ -17,18 +17,30 @@ function getItem(label, key, icon, children, type) {
     type,
   };
 }
-import { Badge, Space } from "antd";
+import { Badge } from "antd";
 
 let CartDetails = JSON.parse(localStorage.getItem("CartDetails"));
 const items = [
-  getItem("Navigation One", "sub1", <MailOutlined />, [
+  getItem("Home", "sub1", <MailOutlined />, [
     getItem(
       "Pages",
       "g1",
       null,
-      [getItem("Home", "/"), getItem("Meals", "/meals")],
+      [
+        getItem("Home", "/"),
+        getItem("Meals", "/meals"),
+        getItem(<CommonDrawer />, ""),
+        getItem("Login", "/login"),
+        getItem(
+          <Badge count={CartDetails.length} size="small">
+            Cart
+          </Badge>,
+          "/order"
+        ),
+      ],
       "group"
     ),
+
     // getItem(
     //   "Item 2",
     //   "g2",
@@ -37,22 +49,14 @@ const items = [
     //   "group"
     // ),
   ]),
-  getItem("Navigation Two", "sub2", <AppstoreOutlined />, [
-    getItem(<CommonDrawer />, ""),
-    getItem("Login", "/login"),
-    getItem(
-      <Badge count={CartDetails.length} size="small">
-        Cart
-      </Badge>,
-      "/order"
-    ),
-  ]),
-  getItem("Navigation Three", "sub4", <SettingOutlined />, [
-    getItem("Option 9", "9"),
-    getItem("Option 10", "10"),
-    getItem("Option 11", "11"),
-    getItem("Option 12", "12"),
-  ]),
+  // getItem("Navigation Two", "sub2", <AppstoreOutlined />, [
+  // ]),
+  // getItem("Navigation Three", "sub4", <SettingOutlined />, [
+  //   getItem("Option 9", "9"),
+  //   getItem("Option 10", "10"),
+  //   getItem("Option 11", "11"),
+  //   getItem("Option 12", "12"),
+  // ]),
 ];
 
 let Navbar = () => {
@@ -62,24 +66,22 @@ let Navbar = () => {
   };
   return (
     <>
-      <img
-        src="https://user-images.githubusercontent.com/69896733/209149712-53ed17eb-c85b-4939-bf2e-07b66553a960.png"
-        alt="image_logo"
-        className="logo_img"
-      />
       <Menu
         onClick={onClick}
-        style={{
-          width: 256,
-          // position:"fixed",
-          // zIndex: 30,
-          // overflowY:"auto"
-          // border:"1px solid red"
-        }}
+        className="navbar"
+        // style={{
+        //   width: 256,
+          
+        //   // position:"fixed",
+        //   // zIndex: 30,
+        //   // overflowY:"auto"
+        //   // border:"1px solid red"
+        // }}
         defaultSelectedKeys={["1"]}
         defaultOpenKeys={["sub1"]}
-        mode="inline"
+        mode="horizontal"
         items={items}
+        
       />
     </>
   );
